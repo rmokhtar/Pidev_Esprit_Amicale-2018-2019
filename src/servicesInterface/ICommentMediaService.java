@@ -14,6 +14,7 @@ import java.util.ArrayList;
  */
 public interface ICommentMediaService {
     public ArrayList<CommentMedia> getAllCommentsByMedia(int idMedia);
+     public CommentMedia findById(int id);
     public boolean insertCommentMedia(CommentMedia comment);
     public boolean updateCommentMedia(CommentMedia comment,String newComment);
     public boolean deleteCommentMedia(CommentMedia comment);

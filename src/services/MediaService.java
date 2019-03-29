@@ -5,6 +5,7 @@
  */
 package services;
 
+import entitys.CommentMedia;
 import entitys.Media;
 import servicesInterface.IMediaService;
 import java.sql.Connection;
@@ -50,6 +51,29 @@ public class MediaService implements IMediaService{
         
     }
 
+             public Media findById(int id)
+         {
+                  Media c=new  Media();
+        cnx = MyDB.getInstance().getCnx();
+        String req="SELECT * FROM media WHERE idMedia="+id;
+        Statement st;
+        try {
+            st = cnx.createStatement();
+            ResultSet rs = st.executeQuery(req);
+            while(rs.next()){ 
+              c.setMediaName(rs.getString("mediaName"));
+                c.setMediaDescription(rs.getString("mediaDescription"));
+                c.setIdUser(rs.getInt("idUser")); 
+                c.setIdEvent(rs.getInt("idEvent"));
+                c.setIdMedia(rs.getInt("idMedia"));
+                c.setDate(rs.getTimestamp("date"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CommentMediaService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return c;
+         }
+	 
 	 
 	public boolean insertMedia(Media media) {
 		cnx = MyDB.getInstance().getCnx();
@@ -109,5 +133,6 @@ public class MediaService implements IMediaService{
 
 		return false;
 	}
+         
 
 }

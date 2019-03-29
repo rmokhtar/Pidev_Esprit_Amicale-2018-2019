@@ -28,10 +28,10 @@ public class CommentMediaService implements ICommentMediaService{
 
     private Connection cnx;
 	 
-	 public ArrayList<CommentMedia> getAllCommentsByMedia(int idCommentMedia) {
+	 public ArrayList<CommentMedia> getAllCommentsByMedia(int idMedia) {
         ArrayList<CommentMedia> comments= new ArrayList<>();
         cnx = MyDB.getInstance().getCnx();
-        String req="SELECT * FROM commentMedia WHERE idCommentMedia="+idCommentMedia;
+        String req="SELECT * FROM commentMedia WHERE idMedia="+idMedia;
         Statement st;
         try {
             st = cnx.createStatement();
@@ -51,7 +51,28 @@ public class CommentMediaService implements ICommentMediaService{
         return comments;
         
     }
-
+         public CommentMedia findById(int id)
+         {
+                   CommentMedia c=new CommentMedia();
+        cnx = MyDB.getInstance().getCnx();
+        String req="SELECT * FROM commentMedia WHERE idCommentMedia="+id;
+        Statement st;
+        try {
+            st = cnx.createStatement();
+            ResultSet rs = st.executeQuery(req);
+            while(rs.next()){ 
+                c.setComment(rs.getString("comment"));
+                c.setIdUser(rs.getInt("idUser"));
+                c.setIdMedia(rs.getInt("idMedia"));
+                c.setIdCommentMedia(rs.getInt("idCommentMedia"));
+                c.setDate(rs.getTimestamp("date"));
+                 
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CommentMediaService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return c;
+         }
 	 
 	public boolean insertCommentMedia(CommentMedia comment) {
 		cnx = MyDB.getInstance().getCnx();

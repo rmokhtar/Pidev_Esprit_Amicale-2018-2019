@@ -14,6 +14,7 @@ import java.util.ArrayList;
  */
 public interface IMediaService {
     public ArrayList<Media> getAllMediasByEvent(int idEvent);
+     public Media findById(int id);
     public boolean insertMedia(Media media);
     public boolean deleteMedia(Media media);
 }
